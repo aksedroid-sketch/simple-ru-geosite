@@ -1,0 +1,33 @@
+# Windows telemetry & tracking
+domain:telemetry.microsoft.com
+domain:vortex.data.microsoft.com
+domain:watson.microsoft.com
+domain:watson.live.com
+domain:settings.data.microsoft.com
+domain:settings-win.data.microsoft.com
+domain:sqm.telemetry.microsoft.com
+domain:oca.telemetry.microsoft.com
+domain:reports.wes.df.telemetry.microsoft.com
+domain:services.wes.df.telemetry.microsoft.com
+domain:umwatson.events.data.microsoft.com
+domain:kmwatson.events.data.microsoft.com
+domain:diagnostics.support.microsoft.com
+domain:browser.pipe.aria.microsoft.com
+domain:mobile.pipe.aria.microsoft.com
+domain:onecollector.cloudapp.aria.akadns.net
+domain:spynet2.microsoft.com
+domain:spynetalt.microsoft.com
+domain:redir.metaservices.microsoft.com
+
+# Ads
+domain:adnxs.com
+domain:adnexus.net
+domain:atdmt.com
+domain:msads.net
+domain:ads.msn.com
+domain:bingads.microsoft.com
+domain:flashtalking.com
+domain:serving-sys.com
+domain:rad.msn.com
+domain:rad.live.com
+domain:pre.footprintpredict.com
