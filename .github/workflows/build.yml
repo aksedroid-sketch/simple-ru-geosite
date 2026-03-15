@@ -46,7 +46,8 @@ jobs:
           declare -A fetched
 
           fetch_list() {
-            local name="$1"
+            local raw="$1"
+            local name="${raw%% *}"
             [[ "${fetched[$name]:-}" == "1" ]] && return
             fetched[$name]=1
             if curl --fail -s -o "data/$name" \
