@@ -65,7 +65,7 @@ jobs:
               exit 1
             fi
           }
-          for root in category-ru private google-play youtube win-spy torrent category-ads; do
+          for root in category-ru private google-play youtube category-ads; do
             fetch_list "$root"
           done
           
@@ -99,7 +99,7 @@ jobs:
           go run main.go \
             --datapath=../data \
             --outputdir=../release \
-            --exportlists=category-ban-ru,category-ru,twitch,youtube,private,category-banks-ru,epicgames,riot,steam,xbox,tiktok,apple,microsoft,custom,custom-proxy,win-spy,torrent,category-ads
+            --exportlists=category-ban-ru,category-ru,twitch,youtube,private,category-banks-ru,epicgames,riot,steam,xbox,tiktok,apple,microsoft,custom,custom-proxy,category-ads
           cd ..
           ls -R
 
