@@ -134,22 +134,31 @@ jobs:
           }
           
           for f in category-ban-ru category-ads win-spy category-ru category-banks-ru; do
-            resolve_domains "data/$f" | sort -u > "release/lists/${f}.txt"
-            echo "Exported ${f}: $(wc -l < "release/lists/${f}.txt") domains"
+            resolve_domains "data/$f" | sort -u > "/tmp/${f}-full.txt"
+            total=$(wc -l < "/tmp/${f}-full.txt")
+            echo "Resolved ${f}: ${total} domains"
+            
+            if [ "$total" -le 300 ]; then
+              cp "/tmp/${f}-full.txt" "release/lists/${f}.txt"
+            else
+              split -l 300 -d -a 2 "/tmp/${f}-full.txt" "release/lists/${f}-part"
+              i=1
+              for part in release/lists/${f}-part*; do
+                mv "$part" "release/lists/${f}-${i}.txt"
+                echo "  ${f}-${i}.txt: $(wc -l < "release/lists/${f}-${i}.txt") domains"
+                i=$((i + 1))
+              done
+            fi
           done
 
-      - name: Create release and upload geosite.dat
+      - name: Create release and upload
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create "$TAG_NAME" \
             release/geosite.dat \
             release/geosite.dat.sha256sum \
-            release/lists/category-ban-ru.txt \
-            release/lists/category-ads.txt \
-            release/lists/win-spy.txt \
-            release/lists/category-ru.txt \
-            release/lists/category-banks-ru.txt \
+            release/lists/*.txt \
             --repo $GITHUB_REPOSITORY \
             --title "$RELEASE_NAME" \
             --notes "" \
