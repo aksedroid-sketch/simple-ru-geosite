@@ -111,6 +111,33 @@ jobs:
           sha256sum release/geosite.dat > release/geosite.dat.sha256sum
           cat release/geosite.dat.sha256sum
 
+      - name: Export domain lists for routers
+        shell: bash
+        run: |
+          mkdir -p release/lists
+          
+          resolve_domains() {
+            local file="$1"
+            [[ -f "$file" ]] || return
+            while IFS= read -r line; do
+              line="${line%%#*}"
+              line="$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+              [[ -z "$line" ]] && continue
+              if [[ "$line" == include:* ]]; then
+                local inc="${line#include:}"
+                inc="${inc%% *}"
+                resolve_domains "data/$inc"
+              elif [[ "$line" != regexp:* && "$line" != @* ]]; then
+                echo "$line" | sed 's/^domain://;s/^full://'
+              fi
+            done < "$file"
+          }
+          
+          for f in category-ban-ru category-ads win-spy category-ru category-banks-ru; do
+            resolve_domains "data/$f" | sort -u > "release/lists/${f}.txt"
+            echo "Exported ${f}: $(wc -l < "release/lists/${f}.txt") domains"
+          done
+
       - name: Create release and upload geosite.dat
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
