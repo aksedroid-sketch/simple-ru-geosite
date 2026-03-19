@@ -132,8 +132,8 @@ jobs:
               fi
             done < "$file"
           }
-          
-          for f in category-ban-ru category-ads win-spy category-ru category-banks-ru; do
+     
+          for f in category-ban-ru category-ads win-spy category-ru category-banks-ru steam epicgames riot xbox; do
             resolve_domains "data/$f" | sort -u > "/tmp/${f}-full.txt"
             total=$(wc -l < "/tmp/${f}-full.txt")
             echo "Resolved ${f}: ${total} domains"
